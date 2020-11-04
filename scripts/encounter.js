@@ -11,7 +11,7 @@ export class Encounters {
         }));
     }
     async RollTable(tableName) {
-        $(`.roll-type-select select`).val(`gmroll`).change();
+        $(`select.roll-type-select`).val(`gmroll`).change();
 
         this.tableName = await this.FindTableRoll(tableName);
         if (!this.tableName) {
@@ -20,10 +20,10 @@ export class Encounters {
             if (!this.tableName) return ui.notifications.error("Não existe tabela de encontro para este mapa: " + tableName);
         }
         await game.betterTables.betterTableRoll(this.tableName);
-        await $(`.roll-type-select select`).val(`roll`).change();
+        await $(`select.roll-type-select`).val(`roll`).change();
     }
     async FindTableRoll(tableName, rollTableEncounterPack = `innocenti-encounters.tables-encounter`) {
-        tableName = tableName || `${EncounterTablePrefix} ${game.scenes.active.name}`;
+        tableName = tableName ?? `${EncounterTablePrefix} ${game.scenes.active.name}`;
         let table;
         try {
             table = await game.tables.entities.find(t => t.name === tableName);
